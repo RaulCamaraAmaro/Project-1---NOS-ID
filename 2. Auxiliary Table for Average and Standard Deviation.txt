@@ -1,0 +1,13 @@
+Auxiliary Table for Mean and Standard Deviation = 
+VALUES(nosid_w[Ano-Semana])
+
+Week Considered = 
+IF(YEAR(TODAY()-7)&"_"&WEEKNUM(TODAY()-7,21)='Tabela Aux para Media e Desvio Padrao'[Ano-Semana],1,0)
+
+--Creating BackendTimeout Column
+
+SignUp Erros (BackendTimeout) = 
+CALCULATE(
+	SUM(nosid_w[num_records]),
+		nosid_w[status]="BackendTimeout",nosid_w[Last_8_Weeks]=1,nosid_w[year_week]>=202222)
+

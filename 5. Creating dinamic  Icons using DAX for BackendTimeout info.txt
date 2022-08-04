@@ -1,0 +1,11 @@
+Icon_WoW_BackendTimeout = 
+    VAR Green = UNICHAR(128994) & " " & ROUND([WoW_BackendTimeout],3)*100 & "%"
+    VAR Grey = UNICHAR(9899) &  " " &  ROUND([WoW_BackendTimeout],3)*100 & "%"
+    VAR Blue = UNICHAR(128309) & " " &  ROUND([WoW_BackendTimeout],3)*100 & "%"
+    VAR NoValue = UNICHAR(9898) & " " &  ROUND([WoW_BackendTimeout3],4)*100 & "%"
+RETURN
+       IF('Tabela Aux para Media e Desvio Padrao'[Semana Atual_SignUp Erros (BackendTimeout)]>='Tabela Aux para Media e Desvio Padrao'[MEDIA -1 DESVIO PADRAO_SignUp Erros (BackendTimeout)]&&'Tabela Aux para Media e Desvio Padrao'[Semana Atual_SignUp Erros (BackendTimeout)]<='Tabela Aux para Media e Desvio Padrao'[MEDIA +1 DESVIO PADRAO_SignUp Erros (BackendTimeout)],Green,
+
+       IF([WoW_BackendTimeout]=BLANK(),NoValue,
+
+       IF('Tabela Aux para Media e Desvio Padrao'[Semana Atual_SignUp Erros (BackendTimeout)]>='Tabela Aux para Media e Desvio Padrao'[MEDIA -2 DESVIO PADRAO_SignUp Erros (BackendTimeout)]&&'Tabela Aux para Media e Desvio Padrao'[Semana Atual_SignUp Erros (BackendTimeout)]<='Tabela Aux para Media e Desvio Padrao'[MEDIA +2 DESVIO PADRAO_SignUp Erros (BackendTimeout)],Blue,Grey)))

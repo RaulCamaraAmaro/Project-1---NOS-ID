@@ -1,0 +1,52 @@
+SELECT
+  client_appname,
+  controller,
+  function_fe,
+  action,
+  event_action,
+  client_appid,
+  case
+    when event_errorcode is null then 'Success'
+    else event_errorcode
+    end as status,
+  httpresponse_code,
+  logger,
+  count(*) as num_records,
+  AVG(duration) as duration_avg,
+  SUM(case when duration >0 and duration < 100 then 1 else 0 end) as num_duration_0_100ms,
+  SUM(case when duration >=100 and duration < 200 then 1 else 0 end) as num_duration_100_200ms,
+  SUM(case when duration >=200 and duration < 400 then 1 else 0 end) as num_duration_200_400ms,
+  SUM(case when duration >=400 and duration < 700 then 1 else 0 end) as num_duration_400_700ms,
+  SUM(case when duration >=700 and duration < 1000 then 1 else 0 end) as num_duration_700_1000ms,
+  SUM(case when duration >=1000 and duration < 2000 then 1 else 0 end) as num_duration_1000_2000ms,
+  SUM(case when duration >=2000 and duration < 5000 then 1 else 0 end) as num_duration_2000_5000ms,
+  SUM(case when duration >=5000 then 1 else 0 end) as num_duration_greater_5000ms,
+  count(distinct(client_userid)) + count(distinct(client_username)) as nr_clients,
+ CASE
+    WHEN week_of_year(cast(day_part as date)) = 1 AND month(cast(day_part as date)) = 12 THEN year(cast(day_part as date)) + 1
+    WHEN week_of_year(cast(day_part as date)) >= 52 AND month(cast(day_part as date)) = 1 THEN year(cast(day_part as date)) - 1
+    ELSE year(cast(day_part as date))
+END year,
+week(cast(day_part as date)) week,
+(CASE
+    WHEN week_of_year(cast(day_part as date)) = 1 AND month(cast(day_part as date)) = 12 THEN year(cast(day_part as date)) + 1
+    WHEN week_of_year(cast(day_part as date)) >= 52 AND month(cast(day_part as date)) = 1 THEN year(cast(day_part as date)) - 1
+    ELSE year(cast(day_part as date))
+END * 100 +  week(cast(day_part as date))) as year_week
+FROM  ott_multimedia.nosid_k8s
+WHERE
+    day_part >= cast(DATE_FORMAT((current_date - interval '56' day), '%Y-%m-%d') as VARCHAR (10)) AND day_part <= cast(DATE_FORMAT((current_date - interval '1' day), '%Y-%m-%d') as VARCHAR (10))
+GROUP BY
+  day_part,
+  client_appname,
+  controller,
+  function_fe,
+  action,
+  event_action,
+  client_appid,
+  httpresponse_code,
+  logger,
+  case
+    when event_errorcode is null then 'Success'
+    else event_errorcode
+  end

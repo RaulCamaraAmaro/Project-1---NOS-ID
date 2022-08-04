@@ -1,0 +1,26 @@
+Current Week_SignUp Erros (BackendTimeout) = 
+CALCULATE(SUM('Tabela Aux para Media e Desvio Padrao'[SignUp Erros (BackendTimeout)]),'Tabela Aux para Media e Desvio Padrao'[Semana Considerada]=1)
+
+Average +1 Standard deviation_SignUp Erros (BackendTimeout) = 
+VAR Media = AVERAGE('Tabela Aux para Media e Desvio Padrao'[SignUp Erros (BackendTimeout)])
+VAR DesvP = STDEV.P('Tabela Aux para Media e Desvio Padrao'[SignUp Erros (BackendTimeout)])
+RETURN
+Media+1*DesvP
+
+Average -1 Standard deviation_SignUp Erros (BackendTimeout) = 
+VAR Media = AVERAGE('Tabela Aux para Media e Desvio Padrao'[SignUp Erros (BackendTimeout)])
+VAR DesvP = STDEV.P('Tabela Aux para Media e Desvio Padrao'[SignUp Erros (BackendTimeout)])
+RETURN
+Media-1*DesvP
+
+Average +2 Standard deviation_SignUp Erros (BackendTimeout) = 
+VAR Media = AVERAGE('Tabela Aux para Media e Desvio Padrao'[SignUp Erros (BackendTimeout)])
+VAR DesvP = STDEV.P('Tabela Aux para Media e Desvio Padrao'[SignUp Erros (BackendTimeout)])
+RETURN
+Media+2*DesvP
+
+Average -2 Standard deviation_SignUp Erros (BackendTimeout) = 
+VAR Media = AVERAGE('Tabela Aux para Media e Desvio Padrao'[SignUp Erros (BackendTimeout)])
+VAR DesvP = STDEV.P('Tabela Aux para Media e Desvio Padrao'[SignUp Erros (BackendTimeout)])
+RETURN
+Media-2*DesvP

@@ -1,0 +1,5 @@
+WoW_BackendTimeout = 
+var atual = CALCULATE(SUM(nosid_w[num_records]),nosid_w[status]="BackendTimeout",'Calendar Table'[Semana Considerada]=1)
+var anterior = CALCULATE(SUM(nosid_w[num_records]),nosid_w[status]="BackendTimeout",'Calendar Table'[Semana Anterior]=1)
+return
+(atual - anterior)/anterior
